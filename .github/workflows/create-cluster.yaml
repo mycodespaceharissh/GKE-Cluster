@@ -1,0 +1,38 @@
+name: Create GKE Cluster
+
+on:
+  workflow_dispatch: # manual trigger
+  push:
+    paths:
+      - "cluster/**"
+      - "configs/**"
+
+jobs:
+  create-cluster:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Authenticate to GCP
+        uses: google-github-actions/auth@v2
+        with:
+          credentials_json: "${{ secrets.GCP_SA_KEY }}"
+
+      - name: Setup gcloud
+        uses: google-github-actions/setup-gcloud@v2
+
+      - name: Install kubectl
+        uses: azure/setup-kubectl@v4
+
+      - name: Install GKE Auth Plugin
+        run: |
+          gcloud components install gke-gcloud-auth-plugin --quiet
+          echo "USE_GKE_GCLOUD_AUTH_PLUGIN=True" >> $GITHUB_ENV
+
+      - name: Run Cluster Script
+        run: |
+          chmod +x cluster/create-cluster.sh
+          cd cluster
+          ./create-cluster.sh
