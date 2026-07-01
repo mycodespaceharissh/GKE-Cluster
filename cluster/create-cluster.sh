@@ -18,46 +18,14 @@ echo "======================================"
 # Set project
 gcloud config set project "$PROJECT_ID"
 
-# Build zone list (preferred zone first, then fallbacks without duplicates)
-ZONES=("$ZONE")
-for z in $FALLBACK_ZONES; do
-    if [[ "$z" != "$ZONE" ]]; then
-        ZONES+=("$z")
-    fi
-done
-
-SUCCESS_ZONE=""
-
-for zone in "${ZONES[@]}"; do
-    echo ""
-    echo "======================================"
-    echo "Trying zone: $zone"
-    echo "======================================"
-
-    if gcloud container clusters create "$CLUSTER_NAME" \
-        --zone "$zone" \
-        --num-nodes="$NODE_COUNT" \
-        --machine-type="$MACHINE_TYPE" \
-        --enable-ip-alias \
-        --release-channel=regular \
-        --disk-type=pd-standard \
-        --disk-size=50GB \
-        --no-enable-master-authorized-networks; then
-
-        SUCCESS_ZONE="$zone"
-        echo "Cluster created successfully in $zone"
-        break
-    fi
-
-    echo "Cluster creation failed in $zone."
-    echo "Trying next available zone..."
-done
-
-if [[ -z "$SUCCESS_ZONE" ]]; then
-    echo "ERROR: Cluster creation failed in all configured zones."
-    exit 1
-fi
-
+gcloud container clusters create "$CLUSTER_NAME" \
+    --zone "$ZONE" \
+    --num-nodes="$NODE_COUNT" \
+    --machine-type="$MACHINE_TYPE" \
+    --enable-ip-alias \
+    --disk-type=pd-standard \
+    --disk-size=50GB \
+echo "Cluster created successfully in $ZONE"
 echo ""
 echo "Fetching cluster credentials..."
 
