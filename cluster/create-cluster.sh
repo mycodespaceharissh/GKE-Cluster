@@ -20,6 +20,7 @@ gcloud config set project "$PROJECT_ID"
 
 gcloud container clusters create "$CLUSTER_NAME" \
     --zone "$ZONE" \
+    -- region "$REGION" \
     --num-nodes="$NODE_COUNT" \
     --machine-type="$MACHINE_TYPE" \
     --enable-ip-alias \
