@@ -17,18 +17,18 @@ echo "======================================"
 gcloud config set project "$PROJECT_ID"
 
 gcloud container clusters create "$CLUSTER_NAME" \
-    --zone "$zone" \
+    --zone "$ZONE" \
     --num-nodes="$NODE_COUNT" \
-    --disk-type="DISK_TYPE" \
-    --disk-size="DISK_SIZE";
+    --disk-type="$DISK_TYPE" \
+    --disk-size="$DISK_SIZE"
 
-echo "Cluster created successfully in $zone"
+echo "Cluster created successfully in $ZONE"
 echo ""
 echo "Fetching cluster credentials..."
 
 gcloud container clusters get-credentials \
     "$CLUSTER_NAME" \
-    --zone "$zone"
+    --zone "$ZONE"
 
 echo ""
 echo "Cluster Nodes:"
@@ -37,5 +37,5 @@ kubectl get nodes -o wide
 echo ""
 echo "======================================"
 echo "GKE Cluster is Ready!"
-echo "Zone: $zone"
+echo "Zone: $ZONE"
 echo "======================================"
