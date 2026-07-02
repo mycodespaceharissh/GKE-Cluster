@@ -18,6 +18,5 @@ jobs:
 
       - name: Delete Cluster
         run: |
-          gcloud container clusters delete "$CLUSTER_NAME" \
-            --zone "$ZONE" \
+          gcloud container clusters delete confluent-kraft-lab --zone us-central1-a \
             --quiet
