@@ -12,7 +12,6 @@ echo "Cluster Name  : $CLUSTER_NAME"
 echo "Region        : $REGION"
 echo "Preferred Zone: $ZONE"
 echo "Node Count    : $NODE_COUNT"
-echo "Machine Type  : $MACHINE_TYPE"
 echo "======================================"
 
 # Set project
