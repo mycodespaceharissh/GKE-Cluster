@@ -20,4 +20,5 @@ jobs:
         run: |
           gcloud container clusters delete confluent-kraft-lab \
             --zone "$ZONE" \
+            --location "us-central1-a" \
             --quiet
