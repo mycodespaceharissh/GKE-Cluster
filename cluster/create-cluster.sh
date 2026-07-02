@@ -9,10 +9,8 @@ echo "Creating GKE Cluster"
 echo "======================================"
 echo "Project       : $PROJECT_ID"
 echo "Cluster Name  : $CLUSTER_NAME"
-echo "Region        : $REGION"
 echo "Preferred Zone: $ZONE"
 echo "Node Count    : $NODE_COUNT"
-echo "Machine Type  : $MACHINE_TYPE"
 echo "======================================"
 
 # Set project
@@ -21,7 +19,7 @@ gcloud config set project "$PROJECT_ID"
 gcloud container clusters create "$CLUSTER_NAME" \
     --zone "$zone" \
     --num-nodes="$NODE_COUNT" \
-    --disk-type=pd-"DISK_TYPE" \
+    --disk-type="DISK_TYPE" \
     --disk-size="DISK_SIZE";
 
 echo "Cluster created successfully in $zone"
